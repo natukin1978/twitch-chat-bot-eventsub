@@ -14,6 +14,9 @@ templates = Jinja2Templates(directory="templates")
 CONFIG_FILE = "config.json"
 SCHEMA_FILE = "schema.json"
 
+HOST = "127.0.0.1"
+PORT = 38331
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     # 画面表示時に現在の設定とスキーマを読み込む
@@ -81,10 +84,10 @@ async def get_twitch_ids(data: dict = Body(...)):
 
 
 def open_browser():
-    webbrowser.open("http://127.0.0.1:38322")
+    webbrowser.open(f"http://{HOST}:{PORT}")
 
 if __name__ == "__main__":
     # 1.5秒後にブラウザを開く予約（uvicornの起動待ち）
     Timer(1.5, open_browser).start()
 
-    uvicorn.run(app, host="127.0.0.1", port=38322)
+    uvicorn.run(app, host=HOST, port=PORT)
