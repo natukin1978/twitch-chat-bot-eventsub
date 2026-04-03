@@ -198,6 +198,18 @@ async def main():
         bot = TwitchBot(token_database=tdb, subs=subs)
         for pair in tokens:
             await bot.add_token(*pair)
+
+        if not tokens:
+            print("")
+            print("※ Twitch(再)認証が必要な場合")
+            print("")
+            print("BOTアカウントでログインして許可してください。")
+            print("http://localhost:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot%20moderator:manage:banned_users&force_verify=true")
+            print("")
+            print("配信チャンネルアカウントでログインして許可してください。")
+            print("http://localhost:4343/oauth?scopes=channel:bot&force_verify=true")
+            print("")
+
         await bot.start(load_tokens=False)
 
 
