@@ -5,6 +5,7 @@ import os
 import sys
 
 import asqlite
+import questionary
 import twitchio
 
 import global_value as g
@@ -44,6 +45,10 @@ g.talker_name = ""
 g.websocket_fuyuka = None
 g.latest_response_text = ""
 
+continuation_last_time = questionary.text("前回の続きですか？(y/n)").ask()
+is_continue = continuation_last_time == "y"
+if is_continue and OneCommeUsers.load_is_first_on_stream():
+    print("挨拶キャッシュを復元しました。")
 
 async def main():
     def get_fuyukaApi_baseUrl() -> str:
@@ -162,11 +167,6 @@ async def main():
             cmd_result = await bot.timeout_user(target_name, duration)
         if cmd_result:
             logger.info(cmd_result)
-
-    print("前回の続きですか？(y/n) ", end="")
-    is_continue = input() == "y"
-    if is_continue and OneCommeUsers.load_is_first_on_stream():
-        print("挨拶キャッシュを復元しました。")
 
     fs_response = FunctionSkipper(g.config["fuyukaApi"]["skipDuplicateIdInterval"])
 
