@@ -1,6 +1,9 @@
 import json
+import webbrowser
+from threading import Timer
 
 import twitchio
+import uvicorn
 from fastapi import Body, FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -75,3 +78,13 @@ async def get_twitch_ids(data: dict = Body(...)):
             }
     except Exception:
         return None
+
+
+def open_browser():
+    webbrowser.open("http://127.0.0.1:38322")
+
+if __name__ == "__main__":
+    # 1.5秒後にブラウザを開く予約（uvicornの起動待ち）
+    Timer(1.5, open_browser).start()
+
+    uvicorn.run(app, host="127.0.0.1", port=38322)
