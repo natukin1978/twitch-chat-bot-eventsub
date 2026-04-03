@@ -24,9 +24,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build executable with PyInstaller
-        run: |
-          pyinstaller twitch_chat_bot.py --name TwitchChatBot.exe
-          pyinstaller id_checker.py --name IdChecker.exe
+        run: pyinstaller project.spec
 
       - name: Create config.json
         run: copy config.json.template config.json
@@ -43,7 +41,7 @@ jobs:
         run: |
           $tagName = "${{ github.ref_name }}"
           $zipName = "TwitchChatBot-$tagName.zip"
-          Compress-Archive -Path dist\TwitchChatBot.exe\TwitchChatBot.exe, dist\TwitchChatBot.exe\_internal, dist\IdChecker.exe\IdChecker.exe, LICENSE, README.md, config.json, config.json.template, images, messages, prompts -DestinationPath $zipName
+          Compress-Archive -Path dist\myapp_dist\*, LICENSE, README.md, config.json, config.json.template, images, messages, prompts -DestinationPath $zipName
 
       - name: Upload release archive
         uses: actions/upload-release-asset@v1
