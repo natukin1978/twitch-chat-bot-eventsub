@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "title": "Settings",
+  "properties": {
+    "logLevel": {
+      "type": "string",
+      "enum": [
+        "DEBUG",
+        "INFO",
+        "WARNING",
+        "ERROR"
+      ]
+    },
+    "fuyukaApi": {
+      "type": "object",
+      "properties": {
+        "answerLevel": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "responseKeywords": {
+          "type": "array",
+          "format": "table",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
