@@ -55,11 +55,17 @@
               });
 
               const resData = await response.json();
+              if (!resData) {
+                  alert("取得に失敗しました。");
+                  return;
+              }
 
               // 取得した値をエディタの特定のパスに反映
               // editor.getEditor('パス') で個別の入力欄を操作できます
               editor.getEditor('root.twitch.bot.id').setValue(resData.bot_id);
               editor.getEditor('root.twitch.owner.id').setValue(resData.owner_id);
+
+              alert("取得に成功しました。");
             }
           }
         }

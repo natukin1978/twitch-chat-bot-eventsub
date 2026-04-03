@@ -1,6 +1,7 @@
 import json
 
-from fastapi import FastAPI, Request, Body
+import twitchio
+from fastapi import Body, FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
@@ -31,13 +32,25 @@ async def index(request: Request):
 @app.post("/save")
 async def save_config(data: dict):
     # 編集されたデータを保存
-    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    message = ""
+    try:
+        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
 
-    # ここでPythonプログラムを呼び出す例
-    # os.system("python my_bot_script.py")
+        message = "保存しました"
+    except TypeError as e:
+        # データにJSON変換できない型（オブジェクトなど）が含まれている場合
+        message = f"失敗: JSONに変換できないデータが含まれています。 {e}"
 
-    return {"message": "保存してプログラムを実行しました"}
+    except OSError as e:
+        # 権限不足、ディスク容量不足、無効なパスなど、ファイル操作自体のエラー
+        message = f"失敗: ファイルの書き込み中にエラーが発生しました。 {e}"
+
+    except Exception as e:
+        # その他の予期せぬエラー
+        message = f"失敗: 予期せぬエラーが発生しました。 {e}"
+
+    return {"message": message}
 
 @app.post("/get_ids")
 async def get_twitch_ids(data: dict = Body(...)):
@@ -46,12 +59,19 @@ async def get_twitch_ids(data: dict = Body(...)):
     bot_name = data.get("bot", {}).get("name")
     owner_name = data.get("owner", {}).get("name")
 
-    # --- ここで Python の取得ロジックを実行 ---
-    # 例: Twitch APIを叩いて ID を取得する処理を記述
-    # dummy_bot_id = your_twitch_logic.get_id(bot_name)
+    try:
+        async with twitchio.Client(
+            client_id=client_id, client_secret=client_secret
+        ) as client:
+            await client.login()
 
-    # 今回はサンプルとして固定値を返します
-    return {
-        "bot_id": "12345678",
-        "owner_id": "87654321",
-    }
+            bot_user, owner_user = await client.fetch_users(
+                logins=[bot_name, owner_name]
+            )
+
+            return {
+                "bot_id": bot_user.id,
+                "owner_id": owner_user.id,
+            }
+    except Exception:
+        return None
