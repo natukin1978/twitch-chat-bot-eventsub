@@ -48,6 +48,7 @@
             "id": {
               "type": "string",
               "title": "ボットID",
+              "readOnly": true,
               "propertyOrder": 2
             }
           }
@@ -65,7 +66,19 @@
             "id": {
               "type": "string",
               "title": "オーナーID",
+              "readOnly": true,
               "propertyOrder": 2
+            }
+          }
+        },
+        "getIds": {
+          "format": "button",
+          "options": {
+            "button": {
+              "text": "ボットIDとオーナーIDを取得",
+              "icon": "search",
+              "action": "getIds",
+              "validated": true
             }
           }
         }

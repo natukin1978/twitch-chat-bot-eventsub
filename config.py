@@ -1,6 +1,6 @@
 import json
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Body
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
@@ -38,3 +38,20 @@ async def save_config(data: dict):
     # os.system("python my_bot_script.py")
 
     return {"message": "保存してプログラムを実行しました"}
+
+@app.post("/get_ids")
+async def get_twitch_ids(data: dict = Body(...)):
+    client_id = data.get("clientId")
+    client_secret = data.get("clientSecret")
+    bot_name = data.get("bot", {}).get("name")
+    owner_name = data.get("owner", {}).get("name")
+
+    # --- ここで Python の取得ロジックを実行 ---
+    # 例: Twitch APIを叩いて ID を取得する処理を記述
+    # dummy_bot_id = your_twitch_logic.get_id(bot_name)
+
+    # 今回はサンプルとして固定値を返します
+    return {
+        "bot_id": "12345678",
+        "owner_id": "87654321",
+    }
