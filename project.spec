@@ -6,7 +6,7 @@ a = Analysis(
     ['twitch_chat_bot.py'],
     pathex=[],
     binaries=[],
-    datas=[], # ここに必要なデータファイルがあれば追加
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -47,7 +47,7 @@ exe_a = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=True, # GUIならFalse
+    console=True,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
@@ -86,5 +86,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='myapp_dist', # 一時的な出力フォルダ名
+    name='myapp_dist',
 )
