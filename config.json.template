@@ -1,0 +1,50 @@
+{
+  "logLevel": "WARNING",
+  "twitch": {
+    "clientId": "",
+    "clientSecret": "",
+    "bot": {
+      "name": "",
+      "id": ""
+    },
+    "owner": {
+      "name": "",
+      "id": ""
+    }
+  },
+  "fuyukaApi": {
+    "baseUrl": "ws://127.0.0.1:38321",
+    "answerLevel": 16,
+    "answerLength": {
+      "default": 30,
+      "aiCmd": 70,
+      "webScraping": 120
+    },
+    "responseKeywords": [
+      "知って",
+      "教え",
+      "調べ",
+      "説明"
+    ],
+    "exclusionKeywords": [
+      "テスト",
+      "死",
+      "痛"
+    ],
+    "skipDuplicateIdInterval": 20
+  },
+  "timeSignal": {
+    "intervalMinutes": 0,
+    "message": ""
+  },
+  "phantomJsCloud": {
+    "apiKey": ""
+  },
+  "neoInnerApi": {
+    "baseUrl": "",
+    "answerLevel": 2
+  },
+  "oneComme": {
+    "pathUsersCsv": ""
+  }
+}
