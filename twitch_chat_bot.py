@@ -190,6 +190,11 @@ async def main():
                 do_time_signal(time_signal_interval_minutes, time_signal_message)
             )
 
+    # conduit_id の警告を抑止したい…
+    logging.getLogger("twitchio.client").setLevel(logging.ERROR)
+    # StarletteAdapter の警告を抑止したい…
+    logging.getLogger("twitchio.web.aio_adapter").setLevel(logging.ERROR)
+
     bot = None
     async with asqlite.create_pool("tokens.db") as tdb:
         tokens, subs = await setup_database(tdb)
