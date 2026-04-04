@@ -1,8 +1,8 @@
 import os
+import subprocess
 import sys
 import webbrowser
 from threading import Timer
-import subprocess
 
 import twitchio
 import uvicorn
@@ -12,6 +12,7 @@ from fastapi.templating import Jinja2Templates
 
 import global_value as g
 from config_helper import read_config, write_config
+from json_editor_helper import sort_dict_by_schema
 
 g.app_name = "config_app"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -25,18 +26,22 @@ SCHEMA_FILE = "schema.json"
 HOST = "127.0.0.1"
 PORT = 38331
 
+g.schema_data = {}
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     # 画面表示時に現在の設定とスキーマを読み込む
     config_data = read_config(CONFIG_FILE)
     schema_data = read_config(SCHEMA_FILE)
+    if schema_data:
+        g.schema_data = schema_data
 
     return templates.TemplateResponse(
         request=request,
         name="index.html",
         context={
             "config": config_data,
-            "schema": schema_data
+            "schema": schema_data,
         }
     )
 
@@ -45,6 +50,7 @@ async def save_config(data: dict):
     # 編集されたデータを保存
     message = ""
     try:
+        data = sort_dict_by_schema(data, g.schema_data)
         write_config(data, CONFIG_FILE)
 
         message = "保存しました"
