@@ -19,7 +19,7 @@ a = Analysis(
 )
 
 b = Analysis(
-    ['id_checker.py'],
+    ['config_app.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -34,7 +34,7 @@ b = Analysis(
     noarchive=False,
 )
 
-MERGE( (a, 'TwitchChatBot', 'TwitchChatBot'), (b, 'IdChecker', 'IdChecker') )
+MERGE( (a, 'TwitchChatBot', 'TwitchChatBot'), (b, 'ConfigApp', 'ConfigApp') )
 
 pyz_a = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe_a = EXE(
@@ -61,7 +61,7 @@ exe_b = EXE(
     b.scripts,
     [],
     exclude_binaries=True,
-    name='IdChecker',
+    name='ConfigApp',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

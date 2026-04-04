@@ -202,6 +202,19 @@ async def main():
         for pair in tokens:
             await bot.add_token(*pair)
 
+        if not tokens:
+            print("")
+            print("※ Twitch認証が必要な場合")
+            print("")
+            print("Webブラウザで以下に表示されているアドレスにアクセスしてください。")
+            print("")
+            print("TwitchのBOTアカウントでログインして「許可」してください。")
+            print("http://localhost:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot%20moderator:manage:banned_users&force_verify=true")
+            print("")
+            print("Twitchの配信チャンネルアカウントでログインして「許可」してください。")
+            print("http://localhost:4343/oauth?scopes=channel:bot&force_verify=true")
+            print("")
+
         await bot.start(load_tokens=False)
 
 

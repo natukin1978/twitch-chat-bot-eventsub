@@ -1,0 +1,242 @@
+{
+  "type": "object",
+  "title": "配信ボット総合設定",
+  "properties": {
+    "logLevel": {
+      "type": "string",
+      "title": "ログ出力レベル",
+      "description": "コンソールに出力する情報の詳細度。通常は WARNING を推奨。",
+      "enum": [
+        "DEBUG",
+        "INFO",
+        "WARNING",
+        "ERROR"
+      ],
+      "propertyOrder": 1
+    },
+    "twitch": {
+      "type": "object",
+      "title": "Twitch 連携設定",
+      "description": "Twitch APIおよびボット/配信チャンネルのアカウント情報。",
+      "propertyOrder": 2,
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "title": "クライアントID",
+          "propertyOrder": 1
+        },
+        "clientSecret": {
+          "type": "string",
+          "title": "シークレットキー",
+          "format": "password",
+          "propertyOrder": 2
+        },
+        "bot": {
+          "type": "object",
+          "title": "ボットアカウント",
+          "propertyOrder": 3,
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "ボット名",
+              "propertyOrder": 1
+            },
+            "id": {
+              "type": "string",
+              "title": "ボットID",
+              "readOnly": true,
+              "propertyOrder": 2
+            }
+          }
+        },
+        "owner": {
+          "type": "object",
+          "title": "配信チャンネルアカウント",
+          "propertyOrder": 4,
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "配信チャンネル名",
+              "propertyOrder": 1
+            },
+            "id": {
+              "type": "string",
+              "title": "配信チャンネルID",
+              "readOnly": true,
+              "propertyOrder": 2
+            }
+          }
+        },
+        "getIds": {
+          "format": "button",
+          "options": {
+            "button": {
+              "text": "ボットIDと配信チャンネルIDを取得",
+              "icon": "search",
+              "action": "getIds",
+              "validated": true
+            }
+          }
+        }
+      }
+    },
+    "fuyukaApi": {
+      "type": "object",
+      "title": "電脳娘フユカ (AIモデレーター Fuyuka API) 設定",
+      "description": "AIの応答挙動やキーワード反応に関する設定。",
+      "propertyOrder": 3,
+      "properties": {
+        "baseUrl": {
+          "type": "string",
+          "title": "接続URL",
+          "description": "WebSocketの接続先。例: ws://127.0.0.1:38321",
+          "propertyOrder": 1
+        },
+        "answerLevel": {
+          "type": "integer",
+          "title": "応答精度レベル",
+          "description": "コメント毎に応答を返す確率(0～100%)",
+          "minimum": 0,
+          "maximum": 100,
+          "propertyOrder": 2
+        },
+        "answerLength": {
+          "type": "object",
+          "title": "最大回答文字数",
+          "propertyOrder": 3,
+          "properties": {
+            "default": {
+              "type": "integer",
+              "title": "通常時",
+              "propertyOrder": 1
+            },
+            "aiCmd": {
+              "type": "integer",
+              "title": "AIコマンド時",
+              "propertyOrder": 2
+            },
+            "webScraping": {
+              "type": "integer",
+              "title": "Web検索時",
+              "propertyOrder": 3
+            }
+          }
+        },
+        "responseKeywords": {
+          "type": "array",
+          "title": "反応キーワード",
+          "description": "これらの単語が含まれるとAIが必ず応答を開始します。",
+          "format": "table",
+          "items": {
+            "type": "string",
+            "title": "キーワード"
+          },
+          "propertyOrder": 4
+        },
+        "exclusionKeywords": {
+          "type": "array",
+          "title": "除外キーワード",
+          "description": "これらの単語が含まれる場合は応答をスキップします。",
+          "format": "table",
+          "items": {
+            "type": "string",
+            "title": "キーワード"
+          },
+          "propertyOrder": 5
+        },
+        "skipDuplicateIdInterval": {
+          "type": "integer",
+          "title": "重複排除インターバル",
+          "description": "同じIDからの入力を無視する秒数。",
+          "propertyOrder": 6
+        }
+      }
+    },
+    "timeSignal": {
+      "type": "object",
+      "title": "時報設定",
+      "propertyOrder": 4,
+      "properties": {
+        "intervalMinutes": {
+          "type": "integer",
+          "title": "実行間隔 (分)",
+          "description": "0を指定すると無効になります。",
+          "propertyOrder": 1
+        },
+        "message": {
+          "type": "string",
+          "title": "時報メッセージ",
+          "description": "AIにやって欲しいお願いを書きます。",
+          "propertyOrder": 2
+        }
+      },
+      "options": {
+        "collapsed": true
+      }
+    },
+    "phantomJsCloud": {
+      "type": "object",
+      "title": "PhantomJsCloud 設定",
+      "propertyOrder": 5,
+      "properties": {
+        "apiKey": {
+          "type": "string",
+          "title": "APIキー",
+          "format": "password",
+          "propertyOrder": 1
+        }
+      },
+      "options": {
+        "collapsed": true
+      }
+    },
+    "neoInnerApi": {
+      "type": "object",
+      "title": "NeoInner API 設定",
+      "propertyOrder": 6,
+      "properties": {
+        "baseUrl": {
+          "type": "string",
+          "title": "ベースURL",
+          "propertyOrder": 1
+        },
+        "answerLevel": {
+          "type": "integer",
+          "title": "応答レベル",
+          "description": "会話が途切れたタイミングで応答を返す確率(0～100%)",
+          "propertyOrder": 2
+        }
+      },
+      "options": {
+        "collapsed": true
+      }
+    },
+    "oneComme": {
+      "type": "object",
+      "title": "わんコメ (OneComme) 連携",
+      "propertyOrder": 7,
+      "properties": {
+        "pathUsersCsv": {
+          "type": "string",
+          "title": "users.csv パス",
+          "description": "わんコメのユーザーデータ保存先パス。",
+          "propertyOrder": 1
+        },
+        "selectCsvPath": {
+          "format": "button",
+          "options": {
+            "button": {
+              "text": "ファイルを選択",
+              "icon": "folder-open",
+              "action": "selectCsvPath",
+              "validated": true
+            }
+          }
+        }
+      },
+      "options": {
+        "collapsed": true
+      }
+    }
+  }
+}
