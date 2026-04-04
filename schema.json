@@ -1,10 +1,6 @@
 {
   "type": "object",
   "title": "配信ボット総合設定",
-  "options": {
-    "disable_collapse": false,
-    "disable_properties": true
-  },
   "properties": {
     "logLevel": {
       "type": "string",
@@ -171,6 +167,9 @@
           "title": "時報メッセージ",
           "propertyOrder": 2
         }
+      },
+      "options": {
+        "collapsed": true
       }
     },
     "phantomJsCloud": {
@@ -184,6 +183,9 @@
           "format": "password",
           "propertyOrder": 1
         }
+      },
+      "options": {
+        "collapsed": true
       }
     },
     "neoInnerApi": {
@@ -201,6 +203,9 @@
           "title": "応答レベル",
           "propertyOrder": 2
         }
+      },
+      "options": {
+        "collapsed": true
       }
     },
     "oneComme": {
@@ -214,6 +219,9 @@
           "description": "わんコメのユーザーデータ保存先パス。",
           "propertyOrder": 1
         }
+      },
+      "options": {
+        "collapsed": true
       }
     }
   }
