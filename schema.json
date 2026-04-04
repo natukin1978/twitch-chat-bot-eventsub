@@ -17,7 +17,7 @@
     "twitch": {
       "type": "object",
       "title": "Twitch 連携設定",
-      "description": "Twitch APIおよびボット/オーナーのアカウント情報。",
+      "description": "Twitch APIおよびボット/配信チャンネルのアカウント情報。",
       "propertyOrder": 2,
       "properties": {
         "clientId": {
@@ -27,7 +27,7 @@
         },
         "clientSecret": {
           "type": "string",
-          "title": "クライアントシークレット",
+          "title": "シークレットキー",
           "format": "password",
           "propertyOrder": 2
         },
@@ -51,17 +51,17 @@
         },
         "owner": {
           "type": "object",
-          "title": "オーナーアカウント",
+          "title": "配信チャンネルアカウント",
           "propertyOrder": 4,
           "properties": {
             "name": {
               "type": "string",
-              "title": "オーナー名",
+              "title": "配信チャンネル名",
               "propertyOrder": 1
             },
             "id": {
               "type": "string",
-              "title": "オーナーID",
+              "title": "配信チャンネルID",
               "readOnly": true,
               "propertyOrder": 2
             }
@@ -71,7 +71,7 @@
           "format": "button",
           "options": {
             "button": {
-              "text": "ボットIDとオーナーIDを取得",
+              "text": "ボットIDと配信チャンネルIDを取得",
               "icon": "search",
               "action": "getIds",
               "validated": true
@@ -82,7 +82,7 @@
     },
     "fuyukaApi": {
       "type": "object",
-      "title": "Fuyuka API (AIエンジン) 設定",
+      "title": "電脳娘フユカ (AIモデレーター Fuyuka API) 設定",
       "description": "AIの応答挙動やキーワード反応に関する設定。",
       "propertyOrder": 3,
       "properties": {
@@ -95,8 +95,9 @@
         "answerLevel": {
           "type": "integer",
           "title": "応答精度レベル",
-          "minimum": 1,
-          "maximum": 50,
+          "description": "コメント毎に応答を返す確率(0～100%)",
+          "minimum": 0,
+          "maximum": 100,
           "propertyOrder": 2
         },
         "answerLength": {
@@ -124,7 +125,7 @@
         "responseKeywords": {
           "type": "array",
           "title": "反応キーワード",
-          "description": "これらの単語が含まれるとAIが応答を開始します。",
+          "description": "これらの単語が含まれるとAIが必ず応答を開始します。",
           "format": "table",
           "items": {
             "type": "string",
@@ -165,6 +166,7 @@
         "message": {
           "type": "string",
           "title": "時報メッセージ",
+          "description": "AIにやって欲しいお願いを書きます。",
           "propertyOrder": 2
         }
       },
@@ -201,6 +203,7 @@
         "answerLevel": {
           "type": "integer",
           "title": "応答レベル",
+          "description": "会話が途切れたタイミングで応答を返す確率(0～100%)",
           "propertyOrder": 2
         }
       },
@@ -215,7 +218,7 @@
       "properties": {
         "pathUsersCsv": {
           "type": "string",
-          "title": "Users.csv パス",
+          "title": "users.csv パス",
           "description": "わんコメのユーザーデータ保存先パス。",
           "propertyOrder": 1
         },

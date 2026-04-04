@@ -77,7 +77,7 @@ async def select_file():
         "Add-Type -AssemblyName System.Windows.Forms; "
         "$f = New-Object System.Windows.Forms.OpenFileDialog; "
         "$f.Filter = 'CSV files (*.csv)|*.csv|All files (*.*)|*.*'; "
-        "$f.Title = 'Users.csvを選択してください'; "
+        "$f.Title = 'users.csv を選択してください'; "
         "$w = New-Object System.Windows.Forms.Form; "
         "$w.TopMost = $true; "
         "$f.ShowDialog($w) | Out-Null; "
