@@ -41,7 +41,7 @@ jobs:
         run: |
           $tagName = "${{ github.ref_name }}"
           $zipName = "TwitchChatBot-$tagName.zip"
-          Compress-Archive -Path dist\myapp_dist\*, LICENSE, README.md, config.json, config.json.template, images, messages, prompts schema.json templates -DestinationPath $zipName
+          Compress-Archive -Path dist\myapp_dist\*, LICENSE, README.md, config.json, config.json.template, images, messages, prompts, schema.json, templates -DestinationPath $zipName
 
       - name: Upload release archive
         uses: actions/upload-release-asset@v1
