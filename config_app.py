@@ -1,4 +1,5 @@
-import json
+import os
+import sys
 import webbrowser
 from threading import Timer
 
@@ -7,6 +8,12 @@ import uvicorn
 from fastapi import Body, FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+
+import global_value as g
+from config_helper import read_config, write_config
+
+g.app_name = "config_app"
+g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -20,12 +27,9 @@ PORT = 38331
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     # 画面表示時に現在の設定とスキーマを読み込む
-    with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-        config_data = json.load(f)
-    with open(SCHEMA_FILE, "r", encoding="utf-8") as f:
-        schema_data = json.load(f)
+    config_data = read_config(CONFIG_FILE)
+    schema_data = read_config(SCHEMA_FILE)
 
-    # 修正ポイント: 第2引数を context={"request": request, ...} にする
     return templates.TemplateResponse(
         request=request,
         name="index.html",
@@ -40,8 +44,7 @@ async def save_config(data: dict):
     # 編集されたデータを保存
     message = ""
     try:
-        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+        write_config(data, CONFIG_FILE)
 
         message = "保存しました"
     except TypeError as e:
