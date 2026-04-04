@@ -20,7 +20,7 @@
     },
     "twitch": {
       "type": "object",
-      "title": "1. Twitch 連携設定",
+      "title": "Twitch 連携設定",
       "description": "Twitch APIおよびボット/オーナーのアカウント情報。",
       "propertyOrder": 2,
       "properties": {
@@ -86,7 +86,7 @@
     },
     "fuyukaApi": {
       "type": "object",
-      "title": "2. Fuyuka API (AIエンジン) 設定",
+      "title": "Fuyuka API (AIエンジン) 設定",
       "description": "AIの応答挙動やキーワード反応に関する設定。",
       "propertyOrder": 3,
       "properties": {
@@ -157,7 +157,7 @@
     },
     "timeSignal": {
       "type": "object",
-      "title": "3. 時報設定",
+      "title": "時報設定",
       "propertyOrder": 4,
       "properties": {
         "intervalMinutes": {
@@ -175,7 +175,7 @@
     },
     "phantomJsCloud": {
       "type": "object",
-      "title": "4. PhantomJsCloud 設定",
+      "title": "PhantomJsCloud 設定",
       "propertyOrder": 5,
       "properties": {
         "apiKey": {
@@ -188,7 +188,7 @@
     },
     "neoInnerApi": {
       "type": "object",
-      "title": "5. NeoInner API 設定",
+      "title": "NeoInner API 設定",
       "propertyOrder": 6,
       "properties": {
         "baseUrl": {
@@ -205,7 +205,7 @@
     },
     "oneComme": {
       "type": "object",
-      "title": "6. わんコメ (OneComme) 連携",
+      "title": "わんコメ (OneComme) 連携",
       "propertyOrder": 7,
       "properties": {
         "pathUsersCsv": {
