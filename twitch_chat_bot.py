@@ -209,7 +209,7 @@ async def main():
             print("Webブラウザで以下に表示されているアドレスにアクセスしてください。")
             print("")
             print("TwitchのBOTアカウントでログインして「許可」してください。")
-            print("http://localhost:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot%20moderator:manage:banned_users&force_verify=true")
+            print("http://localhost:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot%20moderator:manage:banned_users%20moderator:manage:shoutouts&force_verify=true")
             print("")
             print("Twitchの配信チャンネルアカウントでログインして「許可」してください。")
             print("http://localhost:4343/oauth?scopes=channel:bot&force_verify=true")
