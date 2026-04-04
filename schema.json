@@ -218,6 +218,17 @@
           "title": "Users.csv パス",
           "description": "わんコメのユーザーデータ保存先パス。",
           "propertyOrder": 1
+        },
+        "selectCsvPath": {
+          "format": "button",
+          "options": {
+            "button": {
+              "text": "ファイルを選択",
+              "icon": "folder-open",
+              "action": "selectCsvPath",
+              "validated": true
+            }
+          }
         }
       },
       "options": {

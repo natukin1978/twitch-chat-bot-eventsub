@@ -42,8 +42,8 @@
             });
 
             JSONEditor.defaults.callbacks = {
-                "button" : {
-                    "getIds" : async function (jseditor, e) {
+                "button": {
+                    "getIds": async function (jseditor, e) {
                         // 現在フォームに入力されている値を取得
                         const currentVal = editor.getValue();
                         const twitchData = currentVal.twitch;
@@ -67,6 +67,15 @@
                         editor.getEditor('root.twitch.owner.id').setValue(resData.owner_id);
 
                         alert("取得に成功しました。");
+                    },
+                    "selectCsvPath": async function(jseditor, e) {
+                        const response = await fetch('/select_file');
+                        const data = await response.json();
+
+                        if (data.path) {
+                            // 取得したパスをエディタにセット
+                            editor.getEditor('root.oneComme.pathUsersCsv').setValue(data.path);
+                        }
                     },
                 },
             };
