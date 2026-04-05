@@ -91,7 +91,9 @@ async def main():
             if not response_text:
                 return
 
-            asyncio.create_task(execute_command(response_text))
+            if json_data["id"] == g.app_name:
+                # モデレーターコマンドは自身のリクエストのみ
+                asyncio.create_task(execute_command(response_text))
 
             # 前回と同じならスキップ
             if g.latest_response_text == response_text:
