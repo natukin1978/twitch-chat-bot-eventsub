@@ -102,6 +102,13 @@ class TwitchBot(commands.AutoBot):
 
     async def event_ready(self) -> None:
         logger.info("Successfully logged in as: %s", self.bot_id)
+        owner_user = await self.get_owner_user()
+        g.owner_attr = {
+            "id": owner_user.id,
+            "name": owner_user.name,
+            "display_name": owner_user.display_name,
+            "description": owner_user.description,
+        }
 
     def get_owner_partial_user(self) -> twitchio.PartialUser:
         return self.create_partialuser(user_id=self.ctw["owner"]["id"])

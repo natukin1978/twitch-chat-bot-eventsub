@@ -40,7 +40,7 @@ g.WEB_SCRAPING_MESSAGE = read_text("messages/web_scraping_message.txt")
 
 g.map_is_first_on_stream = {}
 g.set_exclude_id = read_text_set("exclude_id.txt")
-g.talker_name = ""
+g.owner_attr = None
 g.websocket_fuyuka = None
 g.latest_response_text = ""
 
@@ -115,7 +115,7 @@ async def main():
             if type(data) is not dict:
                 raise json.JSONDecodeError("result value was not dict", "", "")
             # JSONとして処理する
-            g.talker_name = data["talkerName"]
+            # もし取り込む値があるなら取り込む
         except json.JSONDecodeError:
             # プレーンテキストとして処理する
             message = message.strip()
@@ -126,8 +126,8 @@ async def main():
             is_response = has_keywords_response(message)
             answer_level = g.config["neoInnerApi"]["answerLevel"]
 
-            id = g.config["twitch"]["owner"]["name"]
-            display_name = g.talker_name
+            id = g.owner_attr["name"]
+            display_name = g.owner_attr["display_name"]
             content = message.strip()
             json_data = create_message_json(id, display_name, False, content)
             noisy = True
