@@ -35,13 +35,13 @@ class TwitchBot(commands.AutoBot):
         self, *, token_database: asqlite.Pool, subs: list[eventsub.SubscriptionPayload]
     ) -> None:
         self.token_database = token_database
-        self.ctw = g.config["twitch"]
 
+        ctw = g.config["twitch"]
         super().__init__(
-            client_id=self.ctw["clientId"],
-            client_secret=self.ctw["clientSecret"],
-            bot_id=self.ctw["bot"]["id"],
-            owner_id=self.ctw["owner"]["id"],
+            client_id=ctw["clientId"],
+            client_secret=ctw["clientSecret"],
+            bot_id=ctw["bot"]["id"],
+            owner_id=ctw["owner"]["id"],
             prefix="!",
             subscriptions=subs,
             force_subscribe=True,
@@ -111,20 +111,20 @@ class TwitchBot(commands.AutoBot):
         }
 
     def get_owner_partial_user(self) -> twitchio.PartialUser:
-        return self.create_partialuser(user_id=self.ctw["owner"]["id"])
+        return self.create_partialuser(user_id=self.owner_id)
 
     async def get_owner_user(self) -> twitchio.User:
-        return await self.fetch_user(id=self.ctw["owner"]["id"])
+        return await self.fetch_user(id=self.owner_id)
 
     async def send_message(self, message: str) -> None:
         owner_user = self.get_owner_partial_user()
-        await owner_user.send_message(sender=self.ctw["bot"]["id"], message=message)
+        await owner_user.send_message(sender=self.bot_id, message=message)
 
     async def send_shoutout(self, target_name: str) -> None:
         owner_user = self.get_owner_partial_user()
         target_user = await self.fetch_user(login=target_name)
         await owner_user.send_shoutout(
-            moderator=self.ctw["bot"]["id"],
+            moderator=self.bot_id,
             to_broadcaster=target_user,
         )
 
@@ -132,7 +132,7 @@ class TwitchBot(commands.AutoBot):
         owner_user = self.get_owner_partial_user()
         target_user = await self.fetch_user(login=target_name)
         return await owner_user.ban_user(
-            moderator=self.ctw["bot"]["id"],
+            moderator=self.bot_id,
             user=target_user,
             reason="disrupted the broadcast.",
         )
@@ -141,7 +141,7 @@ class TwitchBot(commands.AutoBot):
         owner_user = self.get_owner_partial_user()
         target_user = await self.fetch_user(login=target_name)
         return await owner_user.timeout_user(
-            moderator=self.ctw["bot"]["id"],
+            moderator=self.bot_id,
             user=target_user,
             duration=duration,
             reason="disrupted the broadcast.",
