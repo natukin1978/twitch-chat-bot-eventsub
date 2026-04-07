@@ -1,11 +1,11 @@
 import os
 import subprocess
 import sys
-import webbrowser
-from threading import Timer
+import threading
 
 import twitchio
 import uvicorn
+import webview
 from fastapi import Body, FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -124,12 +124,23 @@ async def get_twitch_ids(data: dict = Body(...)):
     except Exception:
         return None
 
-
-def open_browser():
-    webbrowser.open(f"http://{HOST}:{PORT}")
+def start_server():
+    uvicorn.run(app, host=HOST, port=PORT)
 
 if __name__ == "__main__":
-    # 1.5秒後にブラウザを開く予約（uvicornの起動待ち）
-    Timer(1.5, open_browser).start()
+    # サーバーを別スレッドで開始
+    server_thread = threading.Thread(target=start_server, daemon=True)
+    server_thread.start()
 
-    uvicorn.run(app, host=HOST, port=PORT)
+    window = webview.create_window(
+        title="配信ボット設定マネージャー",
+        url=f"http://{HOST}:{PORT}",
+        width=1280,
+        height=800,
+        resizable=True,
+    )
+
+    # ウィンドウ開始（ここがメインループになり、閉じると下の処理へ進む）
+    webview.start()
+    # ウィンドウが閉じられたらプログラム全体を終了
+    sys.exit()
