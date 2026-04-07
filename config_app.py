@@ -11,14 +11,15 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 import global_value as g
-from config_helper import read_config, write_config
+from config_helper import read_config, read_json, write_config
 from json_editor_helper import sort_dict_by_schema
+from resource_helper import get_resource_path
 
 g.app_name = "config_app"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=get_resource_path("templates"))
 
 CONFIG_FILE = "config.json"
 SCHEMA_FILE = "schema.json"
@@ -32,7 +33,7 @@ g.schema_data = {}
 async def index(request: Request):
     # 画面表示時に現在の設定とスキーマを読み込む
     config_data = read_config(CONFIG_FILE)
-    schema_data = read_config(SCHEMA_FILE)
+    schema_data = read_json(get_resource_path(SCHEMA_FILE))
     if schema_data:
         g.schema_data = schema_data
 
@@ -42,7 +43,7 @@ async def index(request: Request):
         context={
             "config": config_data,
             "schema": schema_data,
-        }
+        },
     )
 
 @app.post("/save")
@@ -132,6 +133,7 @@ if __name__ == "__main__":
     server_thread = threading.Thread(target=start_server, daemon=True)
     server_thread.start()
 
+    icon_path = os.path.join(g.base_dir, "images", f"{g.app_name}.ico")
     window = webview.create_window(
         title="配信ボット設定マネージャー",
         url=f"http://{HOST}:{PORT}",
@@ -141,6 +143,6 @@ if __name__ == "__main__":
     )
 
     # ウィンドウ開始（ここがメインループになり、閉じると下の処理へ進む）
-    webview.start()
+    webview.start(icon=icon_path)
     # ウィンドウが閉じられたらプログラム全体を終了
     sys.exit()
