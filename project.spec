@@ -2,11 +2,20 @@
 
 block_cipher = None
 
+# 同梱するリソースの定義
+added_files = [
+    ('schema.json', '.'),
+    ('templates/index.html', 'templates'),
+    ('images/config_app.ico', 'images'),
+    ('images/twitch_chat_bot.ico', 'images'),
+]
+
+# TwitchBot本体の設定
 a = Analysis(
     ['twitch_chat_bot.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=added_files,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -18,12 +27,13 @@ a = Analysis(
     noarchive=False,
 )
 
+# 設定アプリの設定
 b = Analysis(
     ['config_app.py'],
     pathex=[],
     binaries=[],
-    datas=[],
-    hiddenimports=[],
+    datas=added_files,
+    hiddenimports=['pywebview', 'clr', 'proxy_types'], # webviewに必要なものを追加
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -53,6 +63,7 @@ exe_a = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon='images/twitch_chat_bot.ico',
 )
 
 pyz_b = PYZ(b.pure, b.zipped_data, cipher=block_cipher)
@@ -66,12 +77,13 @@ exe_b = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=True,
+    console=False, # 設定画面は専用ウィンドウなのでコンソールを非表示
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon='images/config_app.ico',
 )
 
 coll = COLLECT(
