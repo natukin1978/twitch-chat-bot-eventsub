@@ -33,7 +33,11 @@ b = Analysis(
     pathex=[],
     binaries=[],
     datas=added_files,
-    hiddenimports=['pywebview', 'clr', 'proxy_types'], # webviewに必要なものを追加
+    hiddenimports=[
+        'clr',
+        'webview',
+        'webview.platforms.winforms'
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
