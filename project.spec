@@ -6,8 +6,6 @@ block_cipher = None
 added_files = [
     ('schema.json', '.'),
     ('templates/index.html', 'templates'),
-    ('images/config_app.ico', 'images'),
-    ('images/twitch_chat_bot.ico', 'images'),
 ]
 
 # TwitchBot本体の設定
@@ -15,7 +13,7 @@ a = Analysis(
     ['twitch_chat_bot.py'],
     pathex=[],
     binaries=[],
-    datas=added_files,
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -33,11 +31,7 @@ b = Analysis(
     pathex=[],
     binaries=[],
     datas=added_files,
-    hiddenimports=[
-        'clr',
-        'webview',
-        'webview.platforms.winforms'
-    ],
+    hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -81,7 +75,7 @@ exe_b = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=False, # 設定画面は専用ウィンドウなのでコンソールを非表示
+    console=True,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
