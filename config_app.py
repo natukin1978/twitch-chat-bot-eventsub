@@ -16,6 +16,7 @@ import global_value as g
 from config_helper import read_config, read_json, write_config
 from json_editor_helper import sort_dict_by_schema
 from resource_helper import get_resource_path
+from socket_helper import get_free_port
 
 g.app_name = "config_app"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -32,7 +33,7 @@ CONFIG_FILE = "config.json"
 SCHEMA_FILE = "schema.json"
 
 HOST = "127.0.0.1"
-PORT = 38331
+PORT = get_free_port()
 
 g.schema_data = {}
 
