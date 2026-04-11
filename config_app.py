@@ -12,15 +12,16 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 import global_value as g
-from config_helper import read_config, write_config
+from config_helper import read_config, read_json, write_config
 from json_editor_helper import sort_dict_by_schema
+from resource_helper import get_resource_path
 
 g.app_name = "config_app"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 app = FastAPI()
 app.mount("/images", StaticFiles(directory="images", html=True), name="images")
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=get_resource_path("templates"))
 
 CONFIG_FILE = "config.json"
 SCHEMA_FILE = "schema.json"
@@ -34,7 +35,7 @@ g.schema_data = {}
 async def index(request: Request):
     # 画面表示時に現在の設定とスキーマを読み込む
     config_data = read_config(CONFIG_FILE)
-    schema_data = read_config(SCHEMA_FILE)
+    schema_data = read_json(get_resource_path(SCHEMA_FILE))
     if schema_data:
         g.schema_data = schema_data
 
