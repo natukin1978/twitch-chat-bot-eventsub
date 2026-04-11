@@ -10,7 +10,7 @@ added_files = [
 
 # TwitchBot本体の設定
 a = Analysis(
-    ['twitch_chat_bot.py'],
+    ['main.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -61,7 +61,7 @@ exe_a = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='images/twitch_chat_bot.ico',
+    icon='images/main.ico',
 )
 
 pyz_b = PYZ(b.pure, b.zipped_data, cipher=block_cipher)
