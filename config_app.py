@@ -19,6 +19,7 @@ g.app_name = "config_app"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 app = FastAPI()
+app.mount("/images", StaticFiles(directory="images", html=True), name="images")
 templates = Jinja2Templates(directory="templates")
 
 CONFIG_FILE = "config.json"
