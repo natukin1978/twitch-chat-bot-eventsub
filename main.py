@@ -7,7 +7,6 @@ import sys
 import asqlite
 import questionary
 
-import constants
 import global_value as g
 from config_helper import read_config
 from logging_setup import setup_app_logging
@@ -205,20 +204,7 @@ async def main():
         for pair in tokens:
             await bot.add_token(*pair)
 
-        if not tokens:
-            print("")
-            print("※ Twitch認証が必要な場合")
-            print("")
-            print("Webブラウザで以下に表示されているアドレスにアクセスしてください。")
-            print("")
-            print("TwitchのBOTアカウントでログインして「許可」してください。")
-            print(constants.CALLBACK_URL_BOT)
-            print("")
-            print("Twitchの配信チャンネルアカウントでログインして「許可」してください。")
-            print(constants.CALLBACK_URL_OWNER)
-            print("")
-
-        await bot.start(load_tokens=False)
+        await bot.start(load_tokens=False, with_adapter=False)
 
 
 if __name__ == "__main__":
