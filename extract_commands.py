@@ -11,7 +11,7 @@ def extract_commands(text: str) -> list[str]:
     Returns:
         抽出された文字列のリスト。パターンに一致するものがなければ空のリストを返す。
     """
-    pattern = r"/(?P<command>[a-zA-Z]+)(?P<args>(?:\s+[a-zA-Z0-9]+)*)"
+    pattern = r"/(?P<command>[a-zA-Z]+)(?P<args>(?:\s+[a-zA-Z0-9_]+)*)"
     matches = re.finditer(pattern, text)
 
     result = []

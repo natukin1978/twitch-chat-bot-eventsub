@@ -7,6 +7,7 @@ class TestExtractCommands(unittest.TestCase):
     def test_extract_commands_basic(self):
         self.assertEqual(extract_commands("/clear"), ["clear"])
         self.assertEqual(extract_commands("/ban hoge"), ["ban", "hoge"])
+        self.assertEqual(extract_commands("/ban omen_666"), ["ban", "omen_666"])
         self.assertEqual(extract_commands("/timeout hoge 60"), ["timeout", "hoge", "60"])
         self.assertEqual(extract_commands("/command arg1 arg2 arg3 arg4"), ["command", "arg1", "arg2", "arg3", "arg4"])
 
