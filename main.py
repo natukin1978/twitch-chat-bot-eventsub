@@ -5,14 +5,18 @@ import os
 import sys
 
 import asqlite
-import questionary
 
 import global_value as g
 from config_helper import read_config
+from input_helper import input_with_timeout
 from logging_setup import setup_app_logging
 
 g.app_name = "twitch_chat_bot"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+res = input_with_timeout("前回の続きですか？(y/n) [10秒以内に未入力なら 'n']: ", timeout=10)
+is_continue = (res == "y")
+
 g.config = read_config()
 
 # ロガーの設定
@@ -44,8 +48,6 @@ g.owner_attr = None
 g.websocket_fuyuka = None
 g.latest_response_text = ""
 
-continuation_last_time = questionary.text("前回の続きですか？(y/n)").ask()
-is_continue = continuation_last_time == "y"
 if is_continue and OneCommeUsers.load_is_first_on_stream():
     print("挨拶キャッシュを復元しました。")
 
