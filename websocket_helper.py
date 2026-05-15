@@ -26,7 +26,7 @@ async def websocket_listen_forever(
             async with websockets.connect(websocket_uri) as ws:
                 if handle_set_websocket:
                     handle_set_websocket(ws)
-                print(f"接続成功しました。{websocket_uri}")
+                logger.info("接続成功しました。%s", websocket_uri, extra={'force': True})
                 last_error = None
 
                 while True:
