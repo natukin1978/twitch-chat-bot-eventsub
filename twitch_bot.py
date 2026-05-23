@@ -171,19 +171,27 @@ class MyComponent(commands.Component):
             # await self.handle_commands(payload)
             return
 
-        # fragmentsを使ってテキスト部分だけを繋ぎ合わせる
-        # fragment.type が "text" のものだけを取り出す
-        text = "".join(
-            fragment.text for fragment in payload.fragments if fragment.type == "text"
-        )
+        combined_parts = []
+        for fragment in payload.fragments:
+            if fragment.type == "text":
+                # 普通のコメ
+                text = fragment.text.strip()
+                if text:
+                    if has_keywords_exclusion(text):
+                        # 除外キーワードは取り込まない
+                        return
 
-        # 前後の余計な空白を整える
-        text = text.strip()
+                    combined_parts.append(text)
+
+            elif fragment.type == "emote":
+                # Twitchスタンプは括弧で囲んで表現
+                raw_text = fragment.text
+                clean_text = re.sub(r"^[^A-Z]*", "", raw_text)
+                display_text = clean_text if clean_text else raw_text
+                combined_parts.append(f"({display_text})")
+
+        text = " ".join(combined_parts)
         if not text:
-            return
-
-        if has_keywords_exclusion(text):
-            # 除外キーワードは取り込まない
             return
 
         json_data = create_message_json_from_twitchio_message(payload, text)
