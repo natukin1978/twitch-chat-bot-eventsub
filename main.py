@@ -115,12 +115,16 @@ async def main():
         try:
             data = json.loads(message)
             if type(data) is not dict:
-                raise json.JSONDecodeError("result value was not dict", "", "")
+                raise json.JSONDecodeError("result value was not dict", "", 0)
             # JSONとして処理する
             # もし取り込む値があるなら取り込む
         except json.JSONDecodeError:
             # プレーンテキストとして処理する
             message = message.strip()
+
+            if not message or message.endswith("..."):
+                # 空文字や途中経過を取り込まない
+                return
             if len(message) <= 1 or has_keywords_exclusion(message):
                 # 1文字や除外キーワードは取り込まない
                 return
